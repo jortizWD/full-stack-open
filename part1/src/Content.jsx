@@ -1,12 +1,10 @@
 import React from "react";
-
+import Part from "./Part.jsx";
 const Content = ({ list }) => {
   return (
     <>
       {list.map((item) => (
-        <p>
-          {item[0]} {item[1]}
-        </p>
+        <Part data={item}></Part>
       ))}
     </>
   );
