@@ -1,9 +1,9 @@
 import React from "react";
 import Part from "./Part.jsx";
-const Content = ({ list }) => {
+const Content = ({ parts }) => {
   return (
     <>
-      {list.map((item) => (
+      {parts.map((item) => (
         <Part data={item}></Part>
       ))}
     </>
