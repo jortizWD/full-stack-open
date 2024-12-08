@@ -3,7 +3,7 @@ import React from "react";
 const Part = ({ data }) => {
   return (
     <p>
-      {data[0]} {data[1]}
+      {data.name} {data.exercises}
     </p>
   );
 };
