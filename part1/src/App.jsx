@@ -45,10 +45,19 @@ const App = () => {
     "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.",
     "The only way to go fast, is to go well.",
   ];
+
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState({});
 
   const getAnecdote = () => {
     setSelected(Math.round(Math.random() * (anecdotes.length - 1)));
+  };
+
+  const setVote = () => {
+    setPoints((state) => ({
+      ...state,
+      [selected]: state[selected] ? state[selected] + 1 : 1,
+    }));
   };
 
   return (
@@ -63,8 +72,10 @@ const App = () => {
         <p>No Feeback given</p>
       )}
       <h1>Anecdotes</h1>
+      <Button onClick={setVote}>Vote</Button>
       <Button onClick={getAnecdote}>Next Anecdote</Button>
       <p>{anecdotes[selected]}</p>
+      <p>{points[selected]} Votes</p>
     </div>
   );
 };
