@@ -27,7 +27,11 @@ const App = () => {
       <button onClick={() => setNeutral(neutral + 1)}>Neutral</button>
       <button onClick={() => setBad(bad + 1)}>Bad</button>
       <h1>Statistics</h1>
-      <Statistics good={good} neutral={neutral} bad={bad}></Statistics>
+      {Boolean(good || neutral || bad) ? (
+        <Statistics good={good} neutral={neutral} bad={bad}></Statistics>
+      ) : (
+        <p>No Feeback given</p>
+      )}
     </div>
   );
 };
