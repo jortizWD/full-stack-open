@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const Button = ({ onClick, children }) => {
   return <button onClick={onClick}>{children}</button>;
@@ -47,22 +47,27 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
-  const [points, setPoints] = useState({});
+  const [points, setPoints] = useState(anecdotes.map(() => 0));
 
   const getAnecdote = () => {
     setSelected(Math.round(Math.random() * (anecdotes.length - 1)));
   };
 
   const setVote = () => {
-    setPoints((state) => ({
-      ...state,
-      [selected]: state[selected] ? state[selected] + 1 : 1,
-    }));
+    const copy = [...points];
+    copy[selected] = copy[selected] ? copy[selected] + 1 : 1;
+    setPoints(copy);
   };
+
+  const most = useMemo(() => {
+    const maxValue = Math.max(...points); // Encuentra el valor máximo
+    return points.indexOf(maxValue);
+  }, [points]);
 
   return (
     <div>
       <h1>Give feedback</h1>
+      <Button onClick={() => setGood(good + 1)}>Neutral</Button>
       <Button onClick={() => setNeutral(neutral + 1)}>Neutral</Button>
       <Button onClick={() => setBad(bad + 1)}>Bad</Button>
       <h1>Statistics</h1>
@@ -71,11 +76,14 @@ const App = () => {
       ) : (
         <p>No Feeback given</p>
       )}
-      <h1>Anecdotes</h1>
+      <h1>Anecdote of the Day</h1>
       <Button onClick={setVote}>Vote</Button>
       <Button onClick={getAnecdote}>Next Anecdote</Button>
       <p>{anecdotes[selected]}</p>
-      <p>{points[selected]} Votes</p>
+      <p>Has {points[selected] || 0} Votes</p>
+      <h1>Anecdote with most Votes</h1>
+      <p>{anecdotes[most]}</p>
+      <p>Has {points[most] || 0} Votes</p>
     </div>
   );
 };
